@@ -1,0 +1,28 @@
+.login {
+    background-image: url("https://preview.colorlib.com/theme/timezone/assets/img/hero/about_hero.png.webp");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.login-wrapper {
+    width: 100%;
+    padding: 40px 30px 50px 30px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+form input::placeholder {
+    color: #bfbfbf;
+    font-size: 17px;
+}
+
+.login-wrapper a {
+    color: #5372F0;
+    text-decoration: none;
+}
+
+.login-wrapper a:hover {
+    text-decoration: underline;
+}

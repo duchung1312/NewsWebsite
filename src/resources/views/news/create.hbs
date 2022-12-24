@@ -1,0 +1,45 @@
+<section class="login p-5">
+    <div class="container py-3 my-2">
+        <div class="row justify-content-md-center">
+            <div class="col-md-12 col-lg-8 bg-white p-4 rounded">
+                <h1 class="h1 my-4 text-center font-weight-bold">Đăng bài viết</h1>
+                <div class="card-body">
+                    <form method="POST" action="/news/article/:{{news._id}}?Method=POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>Tiêu Đề</label>
+                            <input type="text" id="name" name="name" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Mô tả</label>
+                            <textarea type="text" class="form-control" id="description" name="description"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Nội dung</label>
+                            <textarea type="text" class="form-control h-30vh" id="content" name="content"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Ảnh</label>
+                            <input type="file" name="avatar" />
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Thể loại</label>
+                            <select name="categories" id="categories">
+                                {{#each category}}
+                                    <option value="{{category.name}}">
+                                        {{category.name}}
+                                    </option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <br>
+                        <hr>
+                        <button name="submit" class="btn btn-success">Đăng</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
