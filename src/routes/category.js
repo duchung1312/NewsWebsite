@@ -12,7 +12,7 @@ router.post('/store',categoryController.store)
 router.get('/create',categoryController.create)
 
 
-router.use('/news/create',categoryController.index)
+// router.use('/news/create',categoryController.index)
 
 
 

@@ -1,5 +1,6 @@
 const Register = require('../models/Register')
 const News = require('../models/News')
+const Category = require('../models/Category')
 const { multipleMongooseToObject } = require('../../util/mongoose')
 
 class siteController {
@@ -14,53 +15,39 @@ class siteController {
         if (page) {
             page = parseInt(page)
             var skip = (page - 1) * PAGE_SIZE
-
-            News.find({})
-                .skip(skip).limit(PAGE_SIZE)
+            Promise.all([News.find({}).skip(skip).limit(PAGE_SIZE), Category.find({})])
+            
                 .then(news => {
                     res.render('home', {
-                        news: multipleMongooseToObject(news)
+                        news: multipleMongooseToObject(news[0]),
+                        category: multipleMongooseToObject(news[1])
                     })
                     // res.json(News)
                 })
                 .catch(next);
         } else {
-            News.find({})
-                .then(news => {
-                    res.render('home', {
-                        news: multipleMongooseToObject(news)
-                    })
-                    // res.json(News)
+            Promise.all([News.find({}), Category.find({})]).then(news => {
+                res.render('home', {
+                    news: multipleMongooseToObject(news[0]),
+                    category: multipleMongooseToObject(news[1])
                 })
-                .catch(next);
+                // res.json(news)
+            })
+            .catch(next);
+            // News.find({})
+            //     .then(news => {
+                    
+            //         // res.render('home', {
+            //         //     news: multipleMongooseToObject(news)
+            //         // })
+            //         res.json(News)
+            //     })
+            //     .catch(next);
             // res.json('loi')
         }
 
     }
-    sport(req, res, next) {
-        res.render('sport')
-    }
-    travel(req, res, next) {
-        res.render('travel')
-    }
-    world(req, res, next) {
-        res.render('world')
-    }
-    health(req, res, next) {
-        res.render('health')
-    }
-    technology(req, res, next) {
-        res.render('technology')
-    }
-    education(req, res, next) {
-        res.render('education')
-    }
-    youth(req, res, next) {
-        res.render('youth')
-    }
-    economic(req, res, next) {
-        res.render('economic')
-    }
+    
 }
 
 

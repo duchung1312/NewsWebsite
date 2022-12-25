@@ -28,8 +28,8 @@
                             <label for="description">Thể loại</label>
                             <select name="categories" id="categories">
                                 {{#each category}}
-                                    <option value="{{category.name}}">
-                                        {{category.name}}
+                                    <option value="{{this._id}}">
+                                        {{this.name}}
                                     </option>
                                 {{/each}}
                             </select>

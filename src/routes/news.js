@@ -11,7 +11,10 @@ const auth = require('../middlewares/auth')
 router.get('/search',newsController.search)
 router.post('/:id/update',auth.checkAuthentication(),upload.single('avatar') ,newsController.update)
 
-router.get('/create',auth.checkAuthentication(),newsController.create)
+router.get('/create', auth.checkAuthentication(), newsController.create)
+router.get('/category/:id',newsController.getByCategory)
+
+
 router.post('/store',auth.checkAuthentication(),newsController.store)
 router.get('/:id/edit',auth.checkAuthentication(),newsController.edit)
 router.delete('/:id',auth.checkAuthentication(),newsController.remove)

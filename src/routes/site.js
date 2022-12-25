@@ -2,15 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const siteController = require('../app/controllers/siteController')
-router.use('/sport', siteController.sport)
-router.use('/travel', siteController.travel)
-router.use('/youth', siteController.youth)
-router.use('/technology', siteController.technology)
-router.use('/youth', siteController.youth)
-router.use('/economic', siteController.economic)
-router.use('/education', siteController.education)
-router.use('/world', siteController.world)
-router.use('/health', siteController.health)
+
 // router.use('/:slug', siteController.show)
 router.use('/', siteController.index)
 module.exports = router

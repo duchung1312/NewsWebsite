@@ -14,7 +14,7 @@ class CategoryController{
         const category = new Category(req.body)
         category.save()
         .then(() => {
-            res.redirect('/login')})
+            res.redirect('home')})
         .catch(error =>{
             res.send('fail')
         })
@@ -23,7 +23,10 @@ class CategoryController{
 
     index(req, res, next) {
         Category.find({})
-            .then(category => res.render('news/create', { category }))
+            .then(category => {
+                console.log('a');
+                res.render('news/create', { category: multipleMongooseToObject(category) })
+            })
             .catch(next)
         
     }

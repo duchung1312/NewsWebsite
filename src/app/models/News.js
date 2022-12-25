@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
 const News = new Schema({
     name: {type: String, require: true,},
     description: { type: String },
-    Category: {
+    categories: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
       require:true,

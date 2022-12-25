@@ -1,7 +1,7 @@
 
-const { mongooseToObject } = require('../../util/mongoose')
+const { mongooseToObject, multipleMongooseToObject } = require('../../util/mongoose')
 const News = require('../models/News')
-
+const Category = require('../models/Category')
 
 class NewsController {
 
@@ -16,7 +16,13 @@ class NewsController {
 
     // [GET]/ peoples/create
     create(req, res, next) {
-        res.render('news/create')
+        // res.render('news/create')
+        Category.find({})
+            .then(category => {
+                console.log('a');
+                res.render('news/create', { category: multipleMongooseToObject(category) })
+            })
+            .catch(next)
     }
     //search
     async search(req, res, next) {
@@ -38,10 +44,11 @@ class NewsController {
         const name = body.name;
         const description = body.description;
         const content = body.content;
+        const categories = body.categories
         const image = file.filename.replace(/\\/g, '/');
         // const people = new People(req.body)
 
-        const news = new News({ name, description, content, image })
+        const news = new News({ name, description, content, categories, image })
         console.log("suc", news);
         news.save()
             // res.send('Save')
@@ -50,11 +57,20 @@ class NewsController {
     }
 
     edit(req, res, next) {
-        News.findById(req.params.id)
-            .then(news => res.render('news/edit', {
-                news: mongooseToObject(news)
+        Promise.all([News.findById(req.params.id), Category.find()])
+            .then(news => {
+            res.render('news/edit', {
+                news: mongooseToObject(news[0]),
+                category: multipleMongooseToObject(news[1])
             })
-            ).catch(next)
+            // res.json(news)
+        })
+        .catch(next);
+        // News.findById(req.params.id)
+        //     .then(news => res.render('news/edit', {
+        //         news: mongooseToObject(news)
+        //     })
+        //     ).catch(next)
     }
 
     // [PUT]/ peoples/:id
@@ -64,11 +80,11 @@ class NewsController {
         const description = body.description;
         const content = body.content;
         const image = file.filename.replace(/\\/g, '/');
+        const categories = body.categories
 
 
 
-
-        News.findByIdAndUpdate(req.params.id, { name, description, content, image })
+        News.findByIdAndUpdate(req.params.id, { name, description, content, image, categories })
             .then(() => res.redirect('/me/stored/news'))
             .catch(next)
 
@@ -88,7 +104,13 @@ class NewsController {
 
     }
     // [GET]/ peoples/create
-
+    getByCategory(req, res, next) {
+        const categoryId = req.params.id
+        News.find({categories: categoryId }).then(news => {
+            res.render('home', { news: multipleMongooseToObject(news) })
+        })
+        .catch(next)
+    }
 
     // [Delete]/ peoples/:id
     remove(req, res, next) {
